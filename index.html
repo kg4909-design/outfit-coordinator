@@ -20,7 +20,7 @@ h1{font-size:26px;margin:2px 0 0;letter-spacing:-.02em}.eyebrow{font-size:12.5px
 .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:13.5px;color:var(--ink);cursor:pointer}
 .chip.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
 .btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
-.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}.btn.dng{background:var(--low);border-color:var(--low);color:#fff}
+.sec{font-size:15px;margin:16px 4px 8px}a.chip{text-decoration:none;color:var(--ink)}.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}.btn.dng{background:var(--low);border-color:var(--low);color:#fff}
 .sl label{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mute)}.sl b{color:var(--ink)}
 input[type=range]{width:100%;accent-color:var(--acc)}
 .feel{background:#f1ece1;border-radius:12px;padding:10px 12px;font-size:14px}
@@ -67,11 +67,11 @@ nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,253,249,.96);bord
 .hbase{width:120px;border-radius:12px;align-self:flex-start}.hth{width:84px;border-radius:12px}
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gi{border:0;background:none;padding:0;cursor:pointer;font:inherit;text-align:left}.gi img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;display:block}.gi span{font-size:11px;color:var(--mute);display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 #gear{position:fixed;top:10px;right:10px;z-index:5;border:1px solid var(--line);background:var(--card);border-radius:999px;width:40px;height:40px;font-size:18px;cursor:pointer}
-.btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+.sec{font-size:15px;margin:16px 4px 8px}a.chip{text-decoration:none;color:var(--ink)}.btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
 </style></head><body>
 <button id="gear" data-a="openSettings" aria-label="AI 설정">⚙️</button>
 <div id="app"><main id="view"></main></div>
-<nav><button class="tb" data-a="tab" data-v="today"><span>👔</span>오늘 코디</button><button class="tb" data-a="tab" data-v="me"><span>🪞</span>내 모습</button><button class="tb" data-a="tab" data-v="closet"><span>🧺</span>옷장</button><button class="tb" data-a="tab" data-v="style"><span>✨</span>스타일</button><button class="tb" data-a="tab" data-v="gaps"><span>🔍</span>진단</button></nav>
+<nav><button class="tb" data-a="tab" data-v="today"><span>👔</span>오늘 코디</button><button class="tb" data-a="tab" data-v="me"><span>🪞</span>내 모습</button><button class="tb" data-a="tab" data-v="closet"><span>🧺</span>옷장</button><button class="tb" data-a="tab" data-v="style"><span>✨</span>스타일</button><button class="tb" data-a="tab" data-v="gaps"><span>🔍</span>진단</button><button class="tb" data-a="tab" data-v="shop"><span>🛍</span>쇼핑</button></nav>
 <div id="modal"></div><div id="modal2"></div>
-<script src="engine.js"></script><script src="ui.js"></script><script src="extra.js"></script><script src="gemini.js"></script>
+<script src="engine.js"></script><script src="ui.js"></script><script src="extra.js"></script><script src="gemini.js"></script><script src="shop.js"></script>
 </body></html>

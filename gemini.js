@@ -118,6 +118,7 @@ function renderM2() {
     <img class="hbase" src="${S.me.photo}" alt="원본">
     <div class="chips">${HAIR_PRESETS.map(p => `<button class="chip ${x.style === p ? 'on' : ''}" data-a="hairPick" data-v="${esc(p)}">${p}</button>`).join('')}</div>
     <label>원하는 스타일(직접 입력해도 돼요)<input id="h_style" value="${esc(x.style)}" placeholder="예: 앞머리 내린 가르마 펌"></label>
+    <div class="row gap wrap"><label class="grow">모질<select id="h_tex">${["잘 모름","직모","반곱슬","곱슬"].map(o=>`<option ${x.tex===o?"selected":""}>${o}</option>`).join("")}</select></label><label class="grow">아침 스타일링 시간<select id="h_time">${["3분 이내","10분 정도","상관없음"].map(o=>`<option ${x.time===o?"selected":""}>${o}</option>`).join("")}</select></label></div>
     <label>머리색<select id="h_color">${HAIR_COLORS.map(c => `<option ${x.color === c ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
     <div class="row gap wrap"><button class="btn" data-a="aiHairRec" ${x.recBusy ? 'disabled' : ''}>${x.recBusy ? '살펴보는 중…' : '✨ AI에게 어울리는 스타일 물어보기'}</button></div>
     ${x.rec ? `<div class="msgs ok"><div><b>${esc(x.rec.faceShape || '')}</b> <span class="mute">(AI의 의견일 뿐 정확한 진단이 아니에요)</span></div>${(x.rec.styles || []).map(s => `<div>• <button class="lnk2" data-a="hairPick" data-v="${esc(s.name)}">${esc(s.name)}</button> — ${esc(s.why)}</div>`).join('')}</div>` : ''}
@@ -198,10 +199,10 @@ async function runHair() {
 async function aiHairRec() {
   const x = S.hair; if (!x || x.recBusy) return;
   if (!S.sample) { S.m2 = 'settings'; renderM2(); return; }
-  x.recBusy = true; x.err = ''; renderM2();
+  x.tex = ($('#h_tex') || {}).value || '잘 모름'; x.time = ($('#h_time') || {}).value || '3분 이내'; x.recBusy = true; x.err = ''; renderM2();
   try {
     const blob = dataUrlToBlob(S.me.photo);
-    const v = await S.sample.json('이 사진 속 사람에게 어울릴 만한 헤어스타일을 추천하세요. 얼굴형은 사진으로 보이는 범위에서 추정한 의견일 뿐이며, 확신이 없으면 그렇게 표현하세요. JSON만 출력: {"faceShape":"추정 얼굴형 한 줄(의견임을 드러내는 표현)","styles":[{"name":"한국에서 통용되는 헤어스타일 이름","why":"이유 한 문장"}]} (styles는 3개)', { images: [blob], cache: false });
+    const v = await S.sample.json(`이 사진 속 사람(30대 남성)에게 어울릴 만한 헤어스타일을 추천하세요. 관리가 쉽고 편한 스타일을 우선하세요. 모질: ${($('#h_tex')||{}).value||'잘 모름'}, 아침 스타일링 시간: ${($('#h_time')||{}).value||'3분 이내'}. 각 스타일의 관리 난이도(쉬움/보통)도 why에 포함하세요. 얼굴형은 사진으로 보이는 범위에서 추정한 의견일 뿐이며, 확신이 없으면 그렇게 표현하세요. JSON만 출력: {"faceShape":"추정 얼굴형 한 줄(의견임을 드러내는 표현)","styles":[{"name":"한국에서 통용되는 헤어스타일 이름","why":"이유 한 문장"}]} (styles는 3개)`, { images: [blob], cache: false });
     x.rec = { faceShape: String(v.faceShape || '').slice(0, 80), styles: (v.styles || []).slice(0, 3).map(s => ({ name: String(s.name || '').slice(0, 20), why: String(s.why || '').slice(0, 80) })).filter(s => s.name) };
   } catch (e) { x.err = errMsg(e); }
   x.recBusy = false; if (S.m2 === 'hair') renderM2();

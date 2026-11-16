@@ -364,7 +364,7 @@ function addSampleCloset() {
 /* --- 렌더/이벤트 --- */
 function render() {
   document.querySelectorAll('.tb').forEach(b => b.classList.toggle('on', b.dataset.v === S.tab));
-  ({ today: renderToday, me: renderMe, closet: renderCloset, style: renderStyle, gaps: renderGaps }[S.tab] || renderToday)();
+  ({ today: renderToday, me: renderMe, closet: renderCloset, style: renderStyle, gaps: renderGaps, shop: renderShop }[S.tab] || renderToday)();
   window.scrollTo(0, 0);
 }
 const H = {
@@ -427,6 +427,7 @@ window.addEventListener('load', async function init() {
   render();
   try {
     const cfg = await DB.get('cfg'); if (cfg) { S.cfg = { key: cfg.key || '', textModel: cfg.textModel || '', imageModel: cfg.imageModel || '', models: cfg.models || null }; setSample(); }
+    const wl = await DB.get('wish'); if (Array.isArray(wl)) S.wish = wl;
     const gl = await DB.get('gallery'); if (Array.isArray(gl)) S.gallery = gl;
     if (S.tab === 'closet') renderCloset(); else if (S.tab === 'me') renderMe();
   } catch (e) { /* AI 없이 동작 */ }
